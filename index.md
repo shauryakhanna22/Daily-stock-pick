@@ -1,8 +1,12 @@
+---
+layout: home
+---
+
 # Daily Stock Picks
 
-**AI-powered equity research — updated every morning at 8am CDT**
+**AI-powered equity research — NYSE & NASDAQ — updated every morning at 8am CDT**
 
-A daily shortlist of 10 undervalued stocks with strong future potential, ranked by growth, quality, and valuation.
+A daily shortlist of 10 undervalued stocks ranked by growth, quality, and valuation.
 
 ---
 
@@ -17,7 +21,7 @@ A daily shortlist of 10 undervalued stocks with strong future potential, ranked 
 
 | Date | Link |
 |------|------|
-| 2026-05-10 | [View picks](https://github.com/shauryakhanna22/Daily-stock-pick/blob/main/picks/2026-05-10.md) |
+| 2026-05-10 | [View picks](picks/2026-05-10) |
 
 ---
 
