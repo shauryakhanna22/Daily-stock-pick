@@ -7,9 +7,9 @@ A daily shortlist of 10 undervalued stocks with strong future potential, ranked 
 ---
 
 ## How to use this
-- Browse the picks below by date
-- Each report scores stocks on: **Growth** (revenue CAGR, EPS) · **Quality** (margins, FCF) · **Valuation** (P/E vs. history, PEG ratio)
+- Each report scores stocks on: **Growth** · **Quality** · **Valuation**
 - Conviction levels: HIGH · MEDIUM · SPECULATIVE
+- Exchanges covered: NYSE · NASDAQ
 
 ---
 
@@ -17,7 +17,7 @@ A daily shortlist of 10 undervalued stocks with strong future potential, ranked 
 
 | Date | Link |
 |------|------|
-| [2026-05-11](picks/2026-05-11.md) | Today's picks |
+| 2026-05-10 | [View picks](https://github.com/shauryakhanna22/Daily-stock-pick/blob/main/picks/2026-05-10.md) |
 
 ---
 
