@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GE Vernova (GEV) — Investment Deep Dive | 2026-05-12</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #2f81f7;
+    --accent-light: #388bfd;
+    --green: #3fb950;
+    --red: #f85149;
+    --yellow: #d29922;
+    --orange: #e3b341;
+    --purple: #8957e5;
+    --watch-color: #e3b341;
+    --buy-color: #3fb950;
+    --avoid-color: #f85149;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a2332 40%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(227,179,65,0.15);
+    border: 1px solid var(--watch-color);
+    color: var(--watch-color);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .hero h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 800; margin-bottom: 6px; }
+  .hero h1 span { color: var(--accent-light); }
+  .hero .subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; }
+
+  .verdict-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(227,179,65,0.1);
+    border: 2px solid var(--watch-color);
+    border-radius: 12px;
+    padding: 14px 28px;
+    margin-bottom: 32px;
+  }
+  .verdict-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .verdict-value { font-size: 28px; font-weight: 800; color: var(--watch-color); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .stat-value { font-size: 20px; font-weight: 700; color: var(--text); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.red { color: var(--red); }
+  .stat-value.yellow { color: var(--yellow); }
+
+  /* NAV */
+  .toc {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .toc a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .toc a:hover { background: var(--surface2); color: var(--text); }
+
+  /* MAIN */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 20px 64px; }
+
+  /* SECTION */
+  .section { margin-bottom: 48px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon { font-size: 22px; }
+  .section-title { font-size: 22px; font-weight: 700; }
+  .section-num { font-size: 13px; color: var(--text-muted); background: var(--surface2); padding: 2px 8px; border-radius: 4px; }
+
+  p { margin-bottom: 12px; color: var(--text); }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 8px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td { padding: 10px 14px; border-top: 1px solid var(--border); font-size: 14px; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .green-text { color: var(--green); font-weight: 600; }
+  .red-text { color: var(--red); font-weight: 600; }
+  .yellow-text { color: var(--yellow); font-weight: 600; }
+
+  /* DCF CARDS */
+  .dcf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .dcf-card {
+    border-radius: 12px;
+    padding: 22px;
+    border: 1px solid;
+  }
+  .dcf-card.bear { background: rgba(248,81,73,0.08); border-color: rgba(248,81,73,0.4); }
+  .dcf-card.base { background: rgba(47,129,247,0.08); border-color: rgba(47,129,247,0.4); }
+  .dcf-card.bull { background: rgba(63,185,80,0.08); border-color: rgba(63,185,80,0.4); }
+  .dcf-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .dcf-card.bear h3 { color: var(--red); }
+  .dcf-card.base h3 { color: var(--accent-light); }
+  .dcf-card.bull h3 { color: var(--green); }
+  .dcf-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+  .dcf-row:last-child { border: none; }
+  .dcf-row .label { color: var(--text-muted); }
+  .dcf-row .val { font-weight: 600; }
+  .dcf-fair-value { font-size: 28px; font-weight: 800; margin-top: 14px; }
+  .dcf-card.bear .dcf-fair-value { color: var(--red); }
+  .dcf-card.base .dcf-fair-value { color: var(--accent-light); }
+  .dcf-card.bull .dcf-fair-value { color: var(--green); }
+  .dcf-vs { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .dcf-prob { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 8px; }
+  .dcf-card.bear .dcf-prob { background: rgba(248,81,73,0.2); color: var(--red); }
+  .dcf-card.base .dcf-prob { background: rgba(47,129,247,0.2); color: var(--accent-light); }
+  .dcf-card.bull .dcf-prob { background: rgba(63,185,80,0.2); color: var(--green); }
+
+  /* RISK ITEMS */
+  .risk-list { display: flex; flex-direction: column; gap: 12px; }
+  .risk-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+  }
+  .risk-item.high { border-left-color: var(--red); }
+  .risk-item.medium { border-left-color: var(--yellow); }
+  .risk-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .risk-item.high h4 { color: var(--red); }
+  .risk-item.medium h4 { color: var(--yellow); }
+  .risk-item p { font-size: 13px; color: var(--text-muted); margin: 0; }
+  .risk-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  .risk-badge.high { background: rgba(248,81,73,0.2); color: var(--red); }
+  .risk-badge.medium { background: rgba(211,153,34,0.2); color: var(--yellow); }
+
+  /* QUOTES */
+  .quote-box {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 12px 0;
+  }
+  .quote-box p { font-style: italic; color: var(--text); margin: 0 0 6px 0; }
+  .quote-box .attribution { font-size: 12px; color: var(--text-muted); margin: 0; font-style: normal; }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .check-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .check-text h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .check-text p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+  /* FINAL VERDICT */
+  .final-verdict {
+    background: linear-gradient(135deg, rgba(227,179,65,0.08) 0%, rgba(227,179,65,0.03) 100%);
+    border: 2px solid var(--watch-color);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .final-verdict .big-verdict { font-size: 48px; font-weight: 900; color: var(--watch-color); margin-bottom: 8px; }
+  .final-verdict .verdict-sub { font-size: 16px; color: var(--text); margin-bottom: 16px; }
+  .final-verdict .entry-zone {
+    display: inline-block;
+    background: rgba(63,185,80,0.1);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .warning-banner {
+    background: rgba(248,81,73,0.1);
+    border: 1px solid rgba(248,81,73,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .warning-banner strong { color: var(--red); }
+
+  /* SEGMENTS */
+  .segment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+  .segment-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .segment-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--accent-light); }
+  .segment-card p { font-size: 13px; color: var(--text-muted); margin: 0; }
+  .seg-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; font-weight: 700; }
+  .seg-badge.strong { background: rgba(63,185,80,0.15); color: var(--green); }
+  .seg-badge.recovering { background: rgba(47,129,247,0.15); color: var(--accent-light); }
+  .seg-badge.problem { background: rgba(248,81,73,0.15); color: var(--red); }
+
+  /* PROGRESS BARS */
+  .progress-row { margin: 8px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+  .progress-label span:first-child { color: var(--text-muted); }
+  .progress-label span:last-child { font-weight: 600; }
+  .progress-bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .dcf-grid { grid-template-columns: 1fr; }
+    .segment-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">⚡ Investment Deep Dive</div>
+  <h1>GE Vernova <span>GEV</span></h1>
+  <p class="subtitle">NYSE · Industrial · Energy Transition · Deep Dive as of 2026-05-12</p>
+
+  <div class="verdict-box">
+    <div>
+      <div class="verdict-label">Verdict</div>
+      <div class="verdict-value">⚠️ WATCH</div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Price</div>
+      <div class="stat-value">$1,075</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Market Cap</div>
+      <div class="stat-value">$288B</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Fwd P/E (2026E)</div>
+      <div class="stat-value yellow">~30x</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">DCF Fair Value</div>
+      <div class="stat-value yellow">$666</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Bull Case FV</div>
+      <div class="stat-value green">$1,000</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">2026 FCF Guide</div>
+      <div class="stat-value green">$7.0B</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Backlog</div>
+      <div class="stat-value green">$163B</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Net Debt</div>
+      <div class="stat-value green">Net Cash</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="toc">
+  <a href="#business">Business</a>
+  <a href="#financials">Financials</a>
+  <a href="#earnings-quality">Earnings Quality</a>
+  <a href="#earnings-call">Earnings Call</a>
+  <a href="#management">Management</a>
+  <a href="#balance-sheet">Balance Sheet</a>
+  <a href="#dcf">DCF Valuation</a>
+  <a href="#risks">Risks</a>
+  <a href="#scenarios">Scenarios</a>
+  <a href="#verdict">Verdict</a>
+</nav>
+
+<div class="container">
+
+<!-- SECTION 1: BUSINESS -->
+<section class="section" id="business">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <span class="section-title">Business Overview</span>
+    <span class="section-num">01</span>
+  </div>
+
+  <p>GE Vernova Inc. (NYSE: GEV) is one of the world's largest electric power equipment companies, <strong>spun off from General Electric in April 2024</strong>. The company designs, manufactures, and services technologies that generate, transfer, orchestrate, convert, and store electricity. With an installed base of approximately <strong>7,000 gas turbines globally</strong> and a $163B backlog, GEV is at the center of the global energy transition.</p>
+
+  <div class="segment-grid">
+    <div class="segment-card">
+      <div class="seg-badge strong">Crown Jewel</div>
+      <h4>Power (~55% Revenue)</h4>
+      <p>Gas turbines, steam turbines, generators, and lifecycle services. ~7,000 installed turbines create a captive, annuity-like services revenue stream. ~70% of Power revenue comes from services.</p>
+    </div>
+    <div class="segment-card">
+      <div class="seg-badge recovering">Fastest Growing</div>
+      <h4>Electrification (~23% Revenue)</h4>
+      <p>Grid solutions, power conversion, solar & storage. Revenue up 32% in Q4 2025. Booking $2.4B in data center equipment orders in Q1 2026 alone — more than all of 2025.</p>
+    </div>
+    <div class="segment-card">
+      <div class="seg-badge problem">Problem Child</div>
+      <h4>Wind (~22% Revenue)</h4>
+      <p>Onshore (recovering) and offshore (losses, litigation, exiting new orders). Offshore wind economics remain broken per management. Vineyard Wind blade failures and federal halt are ongoing issues.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:16px;">The structural investment thesis is compelling: electricity demand is accelerating (AI data centers, EV charging, re-industrialisation), GEV is the dominant supplier of the gas turbines and grid equipment needed to meet that demand, and the services tail on 7,000 turbines creates a durable revenue floor regardless of near-term order volatility.</p>
+</section>
+
+<!-- SECTION 2: FINANCIALS -->
+<section class="section" id="financials">
+  <div class="section-header">
+    <span class="section-icon">📊</span>
+    <span class="section-title">Financial Track Record</span>
+    <span class="section-num">02</span>
+  </div>
+
+  <p><em>Note: GEV spun off in April 2024. Pre-2024 figures represent GE's Energy/Vernova segment.</em></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Year</th><th>Revenue</th><th>Net Income</th><th>FCF</th><th>Net Margin</th><th>FCF Margin</th><th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2022</td><td>~$29.8B</td><td class="red-text">~$(2.0)B</td><td class="red-text">~$(0.6)B</td><td class="red-text">Negative</td><td class="red-text">Negative</td><td>🔴 Restructuring</td></tr>
+        <tr><td>2023</td><td>~$33.2B</td><td class="red-text">~$(0.4)B</td><td class="green-text">~$0.5B</td><td class="red-text">~(1.2)%</td><td class="green-text">~1.5%</td><td>🟡 Turning</td></tr>
+        <tr><td>2024</td><td>$34.9B</td><td class="green-text">$1.55B</td><td class="green-text">$1.73B</td><td class="green-text">4.4%</td><td class="green-text">5.0%</td><td>🟢 Turned</td></tr>
+        <tr><td>2025</td><td>$38.1B</td><td class="green-text">$4.88B</td><td class="green-text">$3.75B</td><td class="green-text">12.8%</td><td class="green-text">9.8%</td><td>🚀 Breakout</td></tr>
+        <tr><td>2026E (guide)</td><td>$44.5–45.5B</td><td>~$9.5B est.</td><td class="green-text">$6.5–7.5B</td><td>~20%+</td><td>~16%</td><td>🚀 Acceleration</td></tr>
+        <tr><td>2028 Target</td><td>~$52B</td><td>—</td><td>$7–9B</td><td>~20% adj EBITDA</td><td>—</td><td>📍 Mgmt target</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The revenue CAGR from 2022 to 2026E is ~11%. More impressive is the FCF trajectory: from -$0.6B in 2022 to a guided $7.0B in 2026 — a $7.6B swing in just four years. This is one of the largest FCF inflections in recent industrial history.</p>
+</section>
+
+<!-- SECTION 3: EARNINGS QUALITY -->
+<section class="section" id="earnings-quality">
+  <div class="section-header">
+    <span class="section-icon">🔍</span>
+    <span class="section-title">Earnings Quality Analysis</span>
+    <span class="section-num">03</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Year</th><th>Net Income</th><th>FCF</th><th>FCF/NI Ratio</th><th>Quality Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2024</td><td>$1.55B</td><td>$1.73B</td><td class="green-text">1.12x ✅</td><td>FCF beats NI — good</td></tr>
+        <tr><td>2025</td><td>$4.88B</td><td>$3.75B</td><td class="yellow-text">0.77x ⚠️</td><td>Below 1x (CapEx ramp)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>FCF/NI of 0.77x in 2025 is acceptable for a company in a heavy investment phase — the gap reflects accelerating CapEx and working capital build ahead of the revenue surge. <strong>The 2026 FCF guidance of $6.5–7.5B should easily exceed net income if guidance is met</strong>, which would restore very high quality conversion.</p>
+
+  <h3 style="font-size:16px; margin: 20px 0 12px; color: var(--red);">🚩 One-Time Items & Flags</h3>
+
+  <div class="risk-list">
+    <div class="risk-item high">
+      <h4><span class="risk-badge high">FLAG</span>Offshore Wind Cumulative Charges: ~$3–4B (2022–2025)</h4>
+      <p>GE Vernova has repeatedly taken charges to write down offshore wind contracts: ~$1.1B (2023), ~$700M (2024 cancellations), plus incremental Vineyard Wind accruals in Q4 2025. These inflate reported losses and distort earnings quality. Until offshore wind is fully exited, expect more charges.</p>
+    </div>
+    <div class="risk-item high">
+      <h4><span class="risk-badge high">FLAG</span>Vineyard Wind Litigation — Defective Blades</h4>
+      <p>Vineyard Wind is suing GE Vernova over allegedly defective blades (68 of 72 may be defective). A blade failure caused a 6-month construction halt. Settlement costs unknown but could be hundreds of millions. Active litigation = contingent liability on balance sheet.</p>
+    </div>
+    <div class="risk-item medium">
+      <h4><span class="risk-badge medium">NOTE</span>GAAP vs. Adjusted EBITDA Reconciliation Gap</h4>
+      <p>Management cannot provide GAAP reconciliations for forward adjusted EBITDA guidance "without unreasonable effort" due to restructuring uncertainty. While disclosed, this limits comparability. Always verify GAAP-to-non-GAAP bridges in quarterly filings.</p>
+    </div>
+    <div class="risk-item medium">
+      <h4><span class="risk-badge medium">NOTE</span>Prolec GE Acquisition (2026) Inflates Comparisons</h4>
+      <p>Full consolidation of Prolec GE in 2026 adds ~$600–700M of incremental revenue. Year-over-year comparisons will flatter 2026 growth slightly. Organic growth vs. consolidated growth should be monitored.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: EARNINGS CALL -->
+<section class="section" id="earnings-call">
+  <div class="section-header">
+    <span class="section-icon">📞</span>
+    <span class="section-title">Earnings Call Intelligence</span>
+    <span class="section-num">04</span>
+  </div>
+
+  <h3 style="font-size:15px; color: var(--text-muted); margin-bottom:14px;">Q1 2026 (April 22, 2026) — Most Recent</h3>
+
+  <div class="quote-box">
+    <p>"We had a solid start to 2026 as we continue to serve the growing, long-cycle electric power market. Demand is accelerating for our Power and Electrification solutions from a diverse set of customers, with our backlog growing by more than $13 billion quarter-over-quarter."</p>
+    <p class="attribution">— Scott Strazik, CEO, Q1 2026 Earnings Call</p>
+  </div>
+
+  <div class="quote-box">
+    <p>"We delivered significant growth and margin expansion in the first quarter as we executed our financial strategy. With robust equipment orders growth in each segment and continued services strength, our backlog grew to $163 billion, inclusive of Prolec GE."</p>
+    <p class="attribution">— Ken Parks, CFO, Q1 2026 Earnings Call</p>
+  </div>
+
+  <div class="table-wrap" style="margin-top:16px;">
+    <table>
+      <thead><tr><th>Metric</th><th>Q1 2026 Actual</th><th>Change vs Q1 2025</th></tr></thead>
+      <tbody>
+        <tr><td>Orders</td><td class="green-text">$18.3B</td><td class="green-text">+71% YoY 🚀</td></tr>
+        <tr><td>Revenue</td><td>$10.6B (est.)</td><td>+7% YoY</td></tr>
+        <tr><td>Adj. EBITDA</td><td>~$1.1B (est.)</td><td class="green-text">+87% YoY</td></tr>
+        <tr><td>Backlog</td><td class="green-text">$163B</td><td class="green-text">+$13B QoQ</td></tr>
+        <tr><td>Gas turbine target (GW)</td><td>110 GW by YE</td><td>Raised from 100 GW</td></tr>
+        <tr><td>Data center equipment orders</td><td class="green-text">$2.4B</td><td class="green-text">&gt; all of 2025 combined</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:15px; color: var(--text-muted); margin: 20px 0 12px;">Updated 2026 Full-Year Guidance (Raised at Q1)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Prior Guidance</th><th>New Guidance</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>$44–45B</td><td class="green-text">$44.5–45.5B ↑</td></tr>
+        <tr><td>Adj. EBITDA Margin</td><td>11%–13%</td><td class="green-text">12%–14% ↑</td></tr>
+        <tr><td>Free Cash Flow</td><td>$5.0–5.5B</td><td class="green-text">$6.5–7.5B ↑↑</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:14px;"><strong>Analyst pushback focused on:</strong> tariff exposure and global trade risk; Vineyard Wind resolution timeline; Prolec GE integration costs. Management was reassuring but non-specific on tariff impacts. <strong>The guidance raise — especially on FCF ($1.5–2B raise in one quarter) — is extraordinary and is the key driver of recent stock appreciation.</strong></p>
+</section>
+
+<!-- SECTION 5: MANAGEMENT -->
+<section class="section" id="management">
+  <div class="section-header">
+    <span class="section-icon">👔</span>
+    <span class="section-title">Management Quality</span>
+    <span class="section-num">05</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Executive</th><th>Recent Insider Activity</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr><td>Scott Strazik (CEO)</td><td>RSU/option exercises; tax withholding at ~$1,115/share</td><td class="yellow-text">⚠️ Tax withholding (not a sell)</td></tr>
+        <tr><td>Ken Parks (CFO)</td><td>Routine equity awards</td><td class="yellow-text">⚠️ No open-market activity</td></tr>
+        <tr><td>Steven Baert (CPO)</td><td>RSU vest + tax withholding at ~$899/share</td><td class="yellow-text">⚠️ Routine</td></tr>
+        <tr><td>Multiple executives</td><td>New RSU/option grants awarded Feb 2026</td><td class="green-text">✅ Aligned with shareholders</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Key observation:</strong> All insider transactions in the last 6 months are tax-withholding or routine equity vesting — no open-market buying. At a stock that has tripled in a year, the absence of insider buying is a mild yellow flag. Management believes in the company but is not putting personal capital to work at current prices.</p>
+
+  <p><strong>Overall management rating: B+</strong> — Strong operational execution, consistent guidance beats, clear communication. Track record of turning around a deeply challenged business is impressive. Risk: expectations are now so high that any stumble will be heavily penalised.</p>
+</section>
+
+<!-- SECTION 6: BALANCE SHEET -->
+<section class="section" id="balance-sheet">
+  <div class="section-header">
+    <span class="section-icon">🏦</span>
+    <span class="section-title">Balance Sheet Risk</span>
+    <span class="section-num">06</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metric</th><th>2024</th><th>2025</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr><td>Total Debt</td><td>~$3.5B</td><td class="green-text">~$70M</td><td class="green-text">✅ Near-zero</td></tr>
+        <tr><td>Cash & Equivalents</td><td>~$5.8B</td><td class="green-text">~$8.2B</td><td class="green-text">✅ Fortress</td></tr>
+        <tr><td>Net Debt / (Cash)</td><td class="green-text">~($2.3B) net cash</td><td class="green-text">~($8.1B) net cash</td><td class="green-text">✅ Net creditor</td></tr>
+        <tr><td>Net Debt / EBITDA</td><td>N/M (net cash)</td><td>N/M (net cash)</td><td class="green-text">✅ No leverage risk</td></tr>
+        <tr><td>Interest Coverage</td><td>Earns &gt; pays</td><td>Earns &gt; pays</td><td class="green-text">✅ Not a risk</td></tr>
+        <tr><td>Current Ratio</td><td>~1.0</td><td class="yellow-text">0.89 ⚠️</td><td class="yellow-text">Below 1x (deferred revenue)</td></tr>
+        <tr><td>ROE</td><td>—</td><td class="green-text">75.7%</td><td class="green-text">✅ Exceptional</td></tr>
+        <tr><td>ROIC</td><td>—</td><td class="green-text">37.2%</td><td class="green-text">✅ Exceptional</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p><strong>Balance Sheet Risk: LOW.</strong> Total debt has collapsed from $3.5B to $70M in one year. With $8.2B in cash and virtually no debt, GEV is a net creditor — unusual for a capital-intensive industrial. The current ratio of 0.89 is a mild flag but likely reflects deferred revenue from long-term service contracts rather than financial stress. ROE of 75.7% and ROIC of 37.2% are elite-tier metrics.</p>
+
+  <p><strong>Capital allocation:</strong> Dividend initiated (small), $2B+ buyback authorised, $11B cumulative CapEx + R&D planned 2025–2028. Management is re-investing aggressively while also returning capital — appropriate balance given the growth opportunity.</p>
+</section>
+
+<!-- SECTION 7: DCF -->
+<section class="section" id="dcf">
+  <div class="section-header">
+    <span class="section-icon">📐</span>
+    <span class="section-title">DCF Valuation — 3 Scenarios</span>
+    <span class="section-num">07</span>
+  </div>
+
+  <p><strong>Assumptions:</strong> WACC 10% | Terminal Growth 3% | 10-Year FCF projection | Net Cash +$8.2B | Shares: ~272M</p>
+
+  <div class="dcf-grid">
+    <div class="dcf-card bear">
+      <h3>🐻 Bear Case</h3>
+      <div class="dcf-row"><span class="label">2026 Base FCF</span><span class="val">$5.5B</span></div>
+      <div class="dcf-row"><span class="label">Y1–Y5 Growth</span><span class="val">8% CAGR</span></div>
+      <div class="dcf-row"><span class="label">Y6–Y10 Growth</span><span class="val">5% CAGR</span></div>
+      <div class="dcf-row"><span class="label">PV of FCFs</span><span class="val">$44.3B</span></div>
+      <div class="dcf-row"><span class="label">PV of Terminal</span><span class="val">$54.2B</span></div>
+      <div class="dcf-row"><span class="label">Enterprise Value</span><span class="val">$98.5B</span></div>
+      <div class="dcf-fair-value">$392 / share</div>
+      <div class="dcf-vs">Current: $1,075 → 64% downside</div>
+      <div class="dcf-prob">30% probability</div>
+    </div>
+
+    <div class="dcf-card base">
+      <h3>📊 Base Case</h3>
+      <div class="dcf-row"><span class="label">2026 Base FCF</span><span class="val">$7.0B</span></div>
+      <div class="dcf-row"><span class="label">Y1–Y5 Growth</span><span class="val">15% CAGR</span></div>
+      <div class="dcf-row"><span class="label">Y6–Y10 Growth</span><span class="val">8% CAGR</span></div>
+      <div class="dcf-row"><span class="label">PV of FCFs</span><span class="val">$70.8B</span></div>
+      <div class="dcf-row"><span class="label">PV of Terminal</span><span class="val">$102.0B</span></div>
+      <div class="dcf-row"><span class="label">Enterprise Value</span><span class="val">$172.8B</span></div>
+      <div class="dcf-fair-value">$666 / share</div>
+      <div class="dcf-vs">Current: $1,075 → 38% downside</div>
+      <div class="dcf-prob">45% probability</div>
+    </div>
+
+    <div class="dcf-card bull">
+      <h3>🐂 Bull Case</h3>
+      <div class="dcf-row"><span class="label">2026 Base FCF</span><span class="val">$8.0B</span></div>
+      <div class="dcf-row"><span class="label">Y1–Y5 Growth</span><span class="val">20% CAGR</span></div>
+      <div class="dcf-row"><span class="label">Y6–Y10 Growth</span><span class="val">12% CAGR</span></div>
+      <div class="dcf-row"><span class="label">PV of FCFs</span><span class="val">$98.0B</span></div>
+      <div class="dcf-row"><span class="label">PV of Terminal</span><span class="val">$165.9B</span></div>
+      <div class="dcf-row"><span class="label">Enterprise Value</span><span class="val">$263.9B</span></div>
+      <div class="dcf-fair-value">$1,000 / share</div>
+      <div class="dcf-vs">Current: $1,075 → 7% downside</div>
+      <div class="dcf-prob">25% probability</div>
+    </div>
+  </div>
+
+  <p style="margin-top:16px; padding:14px; background:rgba(227,179,65,0.08); border:1px solid rgba(227,179,65,0.3); border-radius:8px; font-size:14px;">
+    <strong style="color:var(--yellow);">⚠️ Valuation Warning:</strong> The stock currently trades <strong>7.5% above even the bull case DCF</strong>. The market is pricing in a scenario more aggressive than our bull case — implying either: (a) FCF significantly exceeds $8B in 2026 and grows faster than 20% for years, or (b) WACC should be lower, or (c) terminal growth should be higher. None of these is impossible given the secular electricity demand tailwinds, but all represent optimistic assumptions. <strong>There is no margin of safety at current prices.</strong>
+  </p>
+
+  <h3 style="font-size:15px; margin: 20px 0 12px; color: var(--text-muted);">Relative Valuation Check</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metric</th><th>GEV</th><th>S&amp;P 500 Avg</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>P/FCF (2026E)</td><td class="red-text">41x</td><td>~25x</td><td class="red-text">Expensive</td></tr>
+        <tr><td>Forward P/E (2026E)</td><td class="yellow-text">~30x</td><td>~22x</td><td class="yellow-text">Premium</td></tr>
+        <tr><td>EV/EBITDA (2026E)</td><td class="red-text">~48x</td><td>~15x</td><td class="red-text">Very Expensive</td></tr>
+        <tr><td>P/Sales (2026E)</td><td class="yellow-text">~6.4x</td><td>~3x</td><td class="yellow-text">Premium</td></tr>
+        <tr><td>Peer avg. P/E (Cap goods)</td><td>—</td><td>~49.9x</td><td class="green-text">GEV below peer avg!</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px; color:var(--text-muted);">Note: GEV's P/E of ~30x is actually below the capital goods peer average of ~50x, which is how analysts justify the "buy" rating. On EV/EBITDA however, GEV is extremely expensive. The difference depends heavily on which metric you use and how you view normalised EBITDA margins.</p>
+</section>
+
+<!-- SECTION 8: RISKS -->
+<section class="section" id="risks">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <span class="section-title">Top 5 Risks</span>
+    <span class="section-num">08</span>
+  </div>
+
+  <div class="risk-list">
+    <div class="risk-item high">
+      <h4><span class="risk-badge high">HIGH</span>Offshore Wind: Ongoing Losses & Vineyard Wind Litigation</h4>
+      <p>~$3–4B in cumulative offshore wind charges 2022–2025. Vineyard Wind project halted by federal directive (Dec 2025); defective blades lawsuit ongoing; 68 of 72 blades may be defective. Until fully resolved, this is a recurring earnings drag and management distraction. Unknown but potentially large settlement liability.</p>
+    </div>
+    <div class="risk-item high">
+      <h4><span class="risk-badge high">HIGH</span>Valuation / Expectations Risk</h4>
+      <p>At ~30x forward P/E and 41x P/FCF, any guidance miss or macro shock could trigger a 25–40% de-rating. The stock has tripled in a year; mean reversion is a real risk. Our bull case DCF only supports $1,000 — the stock is trading above that.</p>
+    </div>
+    <div class="risk-item high">
+      <h4><span class="risk-badge high">HIGH</span>US Energy Policy / IRA Risk</h4>
+      <p>IRA tax credits are a key tailwind for electrification. Any repeal or curtailment reduces addressable market. The federal offshore wind halt demonstrates how quickly policy can change. Gas turbine demand is currently policy-tailwind, but a reversal is possible.</p>
+    </div>
+    <div class="risk-item medium">
+      <h4><span class="risk-badge medium">MEDIUM</span>Execution Risk on Electrification Ramp</h4>
+      <p>$2.4B of data center equipment orders in Q1 2026 alone is extraordinary growth. Delivering on this backlog requires supply chain scaling, component procurement, and skilled labour. Any manufacturing or delivery delay would push revenue recognition and disappoint street expectations.</p>
+    </div>
+    <div class="risk-item medium">
+      <h4><span class="risk-badge medium">MEDIUM</span>Competition from Siemens Energy / MHPS</h4>
+      <p>Gas turbine competitors are also benefiting from the demand surge. If Siemens Energy or Mitsubishi close the technology or service gap, GEV's pricing power could erode. The advantage of 7,000 installed turbines is durable but not permanent if competitors build a competing installed base.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: SCENARIOS -->
+<section class="section" id="scenarios">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <span class="section-title">Investment Scenarios</span>
+    <span class="section-num">09</span>
+  </div>
+
+  <div class="dcf-grid">
+    <div class="dcf-card bear">
+      <h3>🐻 Bear ($650–800)</h3>
+      <div class="dcf-row"><span class="label">Probability</span><span class="val red-text">30%</span></div>
+      <div style="font-size:13px; color:var(--text-muted); margin-top:10px;">Offshore wind costs spike; Vineyard Wind litigation escalates to $1B+; macro slowdown reduces data center buildout; 2026 guidance cut; multiple compresses from 30x to 20x forward P/E</div>
+    </div>
+    <div class="dcf-card base">
+      <h3>📊 Base ($950–1,100)</h3>
+      <div class="dcf-row"><span class="label">Probability</span><span class="val" style="color:var(--accent-light)">45%</span></div>
+      <div style="font-size:13px; color:var(--text-muted); margin-top:10px;">2026 guidance roughly achieved; wind remains a drag but managed; electrification ramp continues with some friction; stock consolidates as fundamentals catch up to valuation</div>
+    </div>
+    <div class="dcf-card bull">
+      <h3>🐂 Bull ($1,300–1,400)</h3>
+      <div class="dcf-row"><span class="label">Probability</span><span class="val green-text">25%</span></div>
+      <div style="font-size:13px; color:var(--text-muted); margin-top:10px;">FCF exceeds $8B in 2026; data center orders accelerate further; offshore wind fully resolved; Power margins hit 20%+; market assigns 35-40x forward P/E to above-consensus 2027 EPS</div>
+    </div>
+  </div>
+
+  <p style="margin-top:16px;"><strong>Probability-weighted 12-month target:</strong> 30% × $725 + 45% × $1,025 + 25% × $1,350 = <strong>~$990</strong> — approximately 8% below current price of $1,075. Risk/reward is slightly negative at current levels.</p>
+</section>
+
+<!-- ANALYST CONSENSUS -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">📈</span>
+    <span class="section-title">Analyst Consensus</span>
+    <span class="section-num">10</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Coverage</td><td>34 analysts</td></tr>
+        <tr><td>Buy / Hold / Sell</td><td class="green-text">29 Buy / 5 Hold / 1 Sell</td></tr>
+        <tr><td>% Buy</td><td class="green-text">85% Buy</td></tr>
+        <tr><td>Mean Price Target</td><td>~$1,130–$1,240</td></tr>
+        <tr><td>High Target</td><td class="green-text">$1,400</td></tr>
+        <tr><td>Low Target</td><td class="red-text">$600–$804</td></tr>
+        <tr><td>Consensus vs. Current</td><td class="yellow-text">~5–15% upside</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warning-banner">
+    <strong>⚠️ Contrarian Note:</strong> When 85%+ of analysts rate a stock Buy — especially after a 3x run in 12 months — it typically signals that expectations are sky-high and most positive catalysts are already priced in. The handful of bears ($600–804 targets) are likely using DCF methodology, which our analysis broadly confirms. Consensus bullishness is not a buy signal.
+  </div>
+</section>
+
+<!-- CHECKLIST & VERDICT -->
+<section class="section" id="verdict">
+  <div class="section-header">
+    <span class="section-icon">✅</span>
+    <span class="section-title">Final Checklist & Verdict</span>
+    <span class="section-num">11</span>
+  </div>
+
+  <div class="checklist">
+    <div class="check-item">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><h4>FCF Generation</h4><p>Strong and accelerating. $3.75B actual (2025) → $7.0B guided (2026). Cumulative $24B+ targeted 2025–2028. Exceptional ramp.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><h4>Competitive Moat</h4><p>Wide and durable. 7,000 gas turbine installed base, high switching costs, proprietary services, dominant position in critical infrastructure.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><h4>Revenue Visibility</h4><p>Exceptional. $163B backlog, long-cycle contracts, multi-year service agreements. Revenue is effectively contracted 3–4 years out.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><h4>Balance Sheet</h4><p>Fortress. $8.2B net cash, near-zero debt, ROE 75.7%, ROIC 37.2%. No financial risk whatsoever.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">✅</span>
+      <div class="check-text"><h4>Management Execution</h4><p>Strong. CEO Strazik has consistently beaten guidance and raised outlook. Clear, data-driven communication. Operational transformation is real.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">⚠️</span>
+      <div class="check-text"><h4>Earnings Quality</h4><p>Moderate. Underlying Power/Electrification is high quality. Offshore wind charges and GAAP gaps are persistent. Vineyard Wind litigation is an unresolved contingency.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">❌</span>
+      <div class="check-text"><h4>Valuation (DCF)</h4><p>Fails. Even in bull case DCF ($1,000), current price ($1,075) is above fair value. Market is pricing in perfection + extra. No margin of safety.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">⚠️</span>
+      <div class="check-text"><h4>Insider Buying</h4><p>No open-market insider buying in last 6 months. All transactions are tax-withholding or RSU vesting. Management is not putting personal capital to work at current prices.</p></div>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">⚠️</span>
+      <div class="check-text"><h4>Risk Profile</h4><p>Offshore wind overhang + Vineyard Wind litigation + regulatory risk + high expectations = meaningful downside risk if anything goes wrong.</p></div>
+    </div>
+  </div>
+
+  <!-- FINAL VERDICT BOX -->
+  <div class="final-verdict">
+    <div class="big-verdict">⚠️ WATCH</div>
+    <div class="verdict-sub">Exceptional business. Demanding price. Wait for margin of safety.</div>
+    <div class="entry-zone">🎯 Attractive Entry Zone: $850–$950</div>
+    <div class="warning-banner" style="margin-top:20px; text-align:left;">
+      <strong>Why WATCH, not BUY:</strong> GE Vernova is arguably the finest industrial franchise in the global energy transition. The business quality is undeniable. But at $1,075, even the bull case DCF ($1,000) is below current price. The stock has tripled in 12 months, analyst consensus is overwhelmingly bullish, and management is not buying in the open market. <em>Capital protection first.</em> A 20–25% pullback to $850–$950 would create a much better risk/reward entry with a genuine margin of safety.
+    </div>
+  </div>
+
+</section>
+
+</div>
+
+<footer>
+  <p>GE Vernova (GEV) Investment Deep Dive | Generated 2026-05-12 | For informational purposes only — not investment advice.</p>
+  <p style="margin-top:6px; font-size:11px;">Data sourced from company filings, earnings calls, SEC Forms, MacroTrends, StockAnalysis, MarketBeat, Seeking Alpha. Always verify with primary sources before investing.</p>
+</footer>
+
+</body>
+</html>
