@@ -8,7 +8,7 @@ A daily shortlist of 10 undervalued stocks ranked by growth, quality, valuation 
 
 ## How to use this
 - Each report scores stocks on: **Growth** - **Quality** - **Valuation** - **Analyst Consensus**
-- Cap categories: Mega Cap (>00B) - Large Cap (0-200B) - Mid Cap (-10B) - Small Cap (00M-2B)
+- Cap categories: Mega Cap (>$200B) - Large Cap ($10-200B) - Mid Cap ($2-10B) - Small Cap ($300M-2B)
 - Exchanges covered: NYSE - NASDAQ
 
 ---
@@ -17,6 +17,7 @@ A daily shortlist of 10 undervalued stocks ranked by growth, quality, valuation 
 
 | Date | Link |
 |------|------|
+| 2026-05-13 | [View picks](picks/2026-05-13.md) |
 | 2026-05-12 | [View picks](picks/2026-05-12.md) |
 | 2026-05-11 | [View picks](picks/2026-05-11.md) |
 
