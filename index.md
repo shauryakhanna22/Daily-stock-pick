@@ -30,3 +30,4 @@ A daily shortlist of 10 undervalued stocks ranked by growth, quality, valuation 
 | Date | Ticker | Company | Verdict | Report | Analysis |
 |------|--------|---------|---------|--------|----------|
 | 2026-05-12 | GEV | GE Vernova | WATCH | [View Report](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/GEV-report.html) | [Full Analysis](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/GEV-2026-05-12) |
+| 2026-05-13 | BSX | Boston Scientific | WATCH | [View Report](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/BSX-report.html) | [Full Analysis](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/BSX-2026-05-13) |
