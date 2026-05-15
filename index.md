@@ -8,7 +8,7 @@ A daily shortlist of 10 undervalued stocks ranked by growth, quality, valuation 
 
 ## How to use this
 - Each report scores stocks on: **Growth** - **Quality** - **Valuation** - **Analyst Consensus**
-- Cap categories: Mega Cap (>00B) - Large Cap (0-200B) - Mid Cap (-10B) - Small Cap (00M-2B)
+- Cap categories: Mega Cap (>B) - Large Cap (-200B) - Mid Cap (-10B) - Small Cap (M-2B)
 - Exchanges covered: NYSE - NASDAQ
 
 ---
@@ -21,6 +21,17 @@ A daily shortlist of 10 undervalued stocks ranked by growth, quality, valuation 
 | 2026-05-13 | [View picks](picks/2026-05-13.md) |
 | 2026-05-12 | [View picks](picks/2026-05-12.md) |
 | 2026-05-11 | [View picks](picks/2026-05-11.md) |
+
+---
+
+## Deep Dives
+
+Full investment analysis with earnings quality, management check, DCF valuation, and verdict.
+
+| Date | Ticker | Company | Full Analysis | Mobile Report |
+|------|--------|---------|---------------|---------------|
+| 2026-05-13 | BSX | Boston Scientific | [Read analysis](deep-dives/BSX-2026-05-13.md) | [View report](deep-dives/BSX-report.html) |
+| 2026-05-12 | GEV | GE Vernova | [Read analysis](deep-dives/GEV-2026-05-12.md) | [View report](deep-dives/GEV-report.html) |
 
 ---
 
