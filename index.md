@@ -31,12 +31,10 @@ A daily shortlist of 10 undervalued stocks ranked by growth, quality, valuation 
 
 Full investment analysis with earnings quality, management check, DCF valuation, and verdict.
 
-| Date | Ticker | Company | Full Analysis | Mobile Report |
-|------|--------|---------|---------------|---------------|
-| 2026-05-13 | BSX | Boston Scientific | [Read analysis](deep-dives/BSX-2026-05-13.md) | [View report](deep-dives/BSX-report.html) |
-| 2026-05-12 | GEV | GE Vernova | [Read analysis](deep-dives/GEV-2026-05-12.md) | [View report](deep-dives/GEV-report.html) |
-| 2026-05-12 | GEV | GE Vernova | WATCH | [View Report](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/GEV-report.html) | [Full Analysis](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/GEV-2026-05-12) |
-| 2026-05-13 | BSX | Boston Scientific | WATCH | [View Report](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/BSX-report.html) | [Full Analysis](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/BSX-2026-05-13) |
+| Date | Ticker | Company | Verdict | Mobile Report | Full Analysis |
+|------|--------|---------|---------|---------------|---------------|
+| 2026-05-12 | GEV | GE Vernova | WATCH | [Read analysis](deep-dives/GEV-2026-05-12.md) | [View report](deep-dives/GEV-report.html) |
+| 2026-05-13 | BSX | Boston Scientific | WATCH | [Read analysis](deep-dives/BSX-2026-05-13.md) | [View report](deep-dives/BSX-report.html) |
 | 2026-05-17 | NU | Nu Holdings | WATCH | [View Report](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/NU-report.html) | [Full Analysis](https://shauryakhanna22.github.io/Daily-stock-pick/deep-dives/NU-2026-05-17) |
 
 ---
