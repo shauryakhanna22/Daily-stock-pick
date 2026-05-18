@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NU Holdings — Investment Deep Dive | 2026-05-17</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #111827;
+    --bg3: #1e2a3a;
+    --border: #2a3a4a;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --green: #10b981;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --orange: #f97316;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #0a0e1a 0%, #111827 50%, #0d1b2a 100%); border-bottom: 1px solid var(--border); padding: 24px 32px; }
+  .header-top { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .ticker { font-size: 36px; font-weight: 800; color: var(--accent); letter-spacing: -1px; font-family: 'Courier New', monospace; }
+  .company-name { font-size: 18px; color: var(--text); font-weight: 600; }
+  .exchange { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+  .verdict-badge { margin-left: auto; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 16px; letter-spacing: 1px; background: linear-gradient(135deg, #f59e0b22, #f59e0b33); border: 1.5px solid var(--yellow); color: var(--yellow); }
+  .date-stamp { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* KEY STATS BAR */
+  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 16px; }
+  .stat-cell { background: var(--bg2); padding: 12px 16px; }
+  .stat-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .stat-value { font-size: 20px; font-weight: 700; color: var(--text); font-family: 'Courier New', monospace; }
+  .stat-value.green { color: var(--green); }
+  .stat-value.red { color: var(--red); }
+  .stat-value.yellow { color: var(--yellow); }
+  .stat-value.accent { color: var(--accent); }
+  .stat-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+  /* LAYOUT */
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* CARDS */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .card-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .card-title::before { content: ''; display: block; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; }
+
+  /* SECTION HEADERS */
+  .section-header { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); margin: 32px 0 16px; display: flex; align-items: center; gap: 10px; }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text3); border-bottom: 1px solid var(--border); background: var(--bg3); }
+  td { padding: 8px 12px; border-bottom: 1px solid #1e2a3a; color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg3); }
+  .td-num { font-family: 'Courier New', monospace; text-align: right; }
+  .td-green { color: var(--green); font-weight: 600; }
+  .td-red { color: var(--red); font-weight: 600; }
+  .td-yellow { color: var(--yellow); font-weight: 600; }
+
+  /* DCF CARDS */
+  .dcf-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .dcf-grid { grid-template-columns: 1fr; } }
+  .dcf-card { border-radius: 10px; padding: 20px; border: 1px solid; }
+  .dcf-bear { background: #1a0a0a; border-color: #ef444433; }
+  .dcf-base { background: #0a1420; border-color: #00d4ff33; }
+  .dcf-bull { background: #0a1a0a; border-color: #10b98133; }
+  .dcf-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700; }
+  .dcf-bear .dcf-label { color: var(--red); }
+  .dcf-base .dcf-label { color: var(--accent); }
+  .dcf-bull .dcf-label { color: var(--green); }
+  .dcf-price { font-size: 32px; font-weight: 800; font-family: 'Courier New', monospace; margin: 4px 0; }
+  .dcf-bear .dcf-price { color: var(--red); }
+  .dcf-base .dcf-price { color: var(--accent); }
+  .dcf-bull .dcf-price { color: var(--green); }
+  .dcf-change { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .dcf-bear .dcf-change { color: #ef444488; }
+  .dcf-base .dcf-change { color: #00d4ff88; }
+  .dcf-bull .dcf-change { color: #10b98188; }
+  .dcf-assumptions { font-size: 11px; color: var(--text3); line-height: 1.8; }
+
+  /* RISK ITEMS */
+  .risk-item { padding: 14px 16px; border-radius: 8px; border-left: 4px solid; margin-bottom: 10px; }
+  .risk-high { background: #1a0808; border-color: var(--red); }
+  .risk-med-high { background: #1a1008; border-color: var(--orange); }
+  .risk-med { background: #1a1608; border-color: var(--yellow); }
+  .risk-title { font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .risk-badge { font-size: 9px; padding: 2px 7px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+  .badge-high { background: #ef444422; color: var(--red); border: 1px solid #ef444444; }
+  .badge-med-high { background: #f9731622; color: var(--orange); border: 1px solid #f9731644; }
+  .badge-med { background: #f59e0b22; color: var(--yellow); border: 1px solid #f59e0b44; }
+  .risk-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* CHECKLIST */
+  .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .check-text { flex: 1; }
+  .check-criterion { font-weight: 600; font-size: 13px; color: var(--text); }
+  .check-note { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  /* QUOTE */
+  .quote-block { background: var(--bg3); border-left: 3px solid var(--accent2); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 12px 0; font-style: italic; color: var(--text2); font-size: 13px; }
+  .quote-attr { font-style: normal; font-size: 11px; color: var(--text3); margin-top: 6px; }
+
+  /* PROGRESS BARS */
+  .bar-row { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+  .bar-label { width: 140px; font-size: 12px; color: var(--text2); flex-shrink: 0; }
+  .bar-track { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .bar-val { width: 60px; text-align: right; font-size: 12px; font-family: 'Courier New', monospace; color: var(--text); }
+
+  /* VERDICT BOX */
+  .verdict-box { background: linear-gradient(135deg, #1a1400, #1a1000); border: 1.5px solid var(--yellow); border-radius: 12px; padding: 24px; margin-top: 20px; }
+  .verdict-title { font-size: 22px; font-weight: 800; color: var(--yellow); letter-spacing: 2px; margin-bottom: 8px; }
+  .verdict-subtitle { font-size: 13px; color: var(--text2); margin-bottom: 16px; line-height: 1.6; }
+  .verdict-note { font-size: 12px; color: var(--text3); font-style: italic; border-top: 1px solid #2a2000; padding-top: 12px; margin-top: 12px; }
+
+  /* INLINE BADGE */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-buy { background: #10b98122; color: var(--green); border: 1px solid #10b98144; }
+  .badge-watch { background: #f59e0b22; color: var(--yellow); border: 1px solid #f59e0b44; }
+  .badge-avoid { background: #ef444422; color: var(--red); border: 1px solid #ef444444; }
+  .badge-up { background: #10b98115; color: var(--green); }
+  .badge-down { background: #ef444415; color: var(--red); }
+
+  /* FOOTER */
+  .footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 20px 32px; text-align: center; font-size: 11px; color: var(--text3); margin-top: 40px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .mono { font-family: 'Courier New', monospace; }
+  .text-sm { font-size: 12px; color: var(--text2); }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+  .tag { display: inline-block; padding: 2px 8px; background: var(--bg3); border-radius: 4px; font-size: 11px; color: var(--text3); margin: 2px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="ticker">NU</div>
+      <div class="company-name">Nu Holdings Ltd.</div>
+      <div class="exchange">NYSE &bull; Cayman Islands &bull; Digital Banking &bull; LatAm</div>
+      <div class="date-stamp">Deep Dive Report &mdash; 2026-05-17</div>
+    </div>
+    <div class="verdict-badge">⚠️ WATCH (Lean BUY)</div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-label">Price</div>
+      <div class="stat-value accent">$12.93</div>
+      <div class="stat-sub">May 14, 2026</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Market Cap</div>
+      <div class="stat-value">$63B</div>
+      <div class="stat-sub">~4.87B shares</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">P/E (TTM)</div>
+      <div class="stat-value yellow">22x</div>
+      <div class="stat-sub">Fwd ~16x</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">DCF Fair Value</div>
+      <div class="stat-value green">$16.65</div>
+      <div class="stat-sub">Base case</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Upside (Base)</div>
+      <div class="stat-value green">+29%</div>
+      <div class="stat-sub">To $16.65 target</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Customers</div>
+      <div class="stat-value">135M</div>
+      <div class="stat-sub">Q1 2026</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">FY2025 Revenue</div>
+      <div class="stat-value">$15.8B</div>
+      <div class="stat-sub">+45% YoY</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">FY2025 NI</div>
+      <div class="stat-value green">$2.9B</div>
+      <div class="stat-sub">+47% YoY</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">ROE</div>
+      <div class="stat-value green">33%</div>
+      <div class="stat-sub">Q4 2025</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Analyst Target</div>
+      <div class="stat-value">$18–20</div>
+      <div class="stat-sub">15 Buy / 3 Hold / 0 Sell</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: BUSINESS OVERVIEW -->
+  <div class="section-header">Business Overview</div>
+  <div class="card">
+    <p style="color:var(--text2); font-size:13px; line-height:1.8;">
+      Nu Holdings (Nubank) is the world's largest independent digital bank by customer count, founded in 2013 by David Vélez (ex-Sequoia Capital). The company disrupted Brazil's highly concentrated banking oligopoly by offering zero-fee credit cards, digital accounts, and consumer credit with no physical branches. The result: a cost-to-serve of just <strong style="color:var(--accent)">$0.80/month per active customer</strong> — 85% below Brazilian incumbents — and a customer acquisition cost of <strong style="color:var(--accent)">$6.42</strong> vs. $50–100+ for traditional banks.
+    </p>
+    <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:8px;">
+      <span class="tag">🇧🇷 Brazil (~85% rev)</span>
+      <span class="tag">🇲🇽 Mexico (~5% rev)</span>
+      <span class="tag">🇨🇴 Colombia (~5% rev)</span>
+      <span class="tag">💳 Credit Cards</span>
+      <span class="tag">💰 Personal Loans</span>
+      <span class="tag">📈 NuInvest</span>
+      <span class="tag">🤖 NuFormer AI</span>
+      <span class="tag">🏦 SMB Banking</span>
+    </div>
+    <div class="quote-block" style="margin-top:16px;">
+      "Nu is fundamentally rebuilding banking around AI, creating new customer experiences and enhancing operational efficiency."
+      <div class="quote-attr">— David Vélez, CEO, Q1 2026 Earnings Call (May 14, 2026)</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: FINANCIAL TRACK RECORD -->
+  <div class="section-header">Financial Track Record</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Revenue &amp; Net Income Growth</div>
+      <table>
+        <thead><tr><th>Year</th><th class="td-num">Revenue</th><th class="td-num">YoY</th><th class="td-num">Net Income</th></tr></thead>
+        <tbody>
+          <tr><td>FY2021</td><td class="td-num">$1.7B</td><td class="td-num td-yellow">—</td><td class="td-num">-$165M</td></tr>
+          <tr><td>FY2022</td><td class="td-num">$4.8B</td><td class="td-num td-green">+182%</td><td class="td-num td-green">$68M</td></tr>
+          <tr><td>FY2023</td><td class="td-num">$8.0B</td><td class="td-num td-green">+68%</td><td class="td-num td-green">$1.0B</td></tr>
+          <tr><td>FY2024</td><td class="td-num">$11.5B</td><td class="td-num td-green">+44%</td><td class="td-num td-green">$1.97B</td></tr>
+          <tr><td>FY2025</td><td class="td-num">$15.8B</td><td class="td-num td-green">+45%</td><td class="td-num td-green">$2.9B</td></tr>
+          <tr style="background:var(--bg3);"><td><strong>Q1 2026</strong></td><td class="td-num"><strong>$5.0B</strong></td><td class="td-num td-green"><strong>+41%</strong></td><td class="td-num td-green"><strong>$871M</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Customer &amp; ARPAC Growth</div>
+      <table>
+        <thead><tr><th>Year</th><th class="td-num">Customers</th><th class="td-num">ARPAC</th><th class="td-num">Activity Rate</th></tr></thead>
+        <tbody>
+          <tr><td>End 2021</td><td class="td-num">33M</td><td class="td-num">$4.50</td><td class="td-num">76%</td></tr>
+          <tr><td>End 2022</td><td class="td-num">54M</td><td class="td-num">$7.00</td><td class="td-num">78%</td></tr>
+          <tr><td>End 2023</td><td class="td-num">79M</td><td class="td-num">$9.50</td><td class="td-num">80%</td></tr>
+          <tr><td>End 2024</td><td class="td-num">110M</td><td class="td-num">$11.50</td><td class="td-num">82%</td></tr>
+          <tr><td>End 2025</td><td class="td-num">131M</td><td class="td-num">$15.00</td><td class="td-num">83%</td></tr>
+          <tr style="background:var(--bg3);"><td><strong>Q1 2026</strong></td><td class="td-num"><strong>135M</strong></td><td class="td-num td-green"><strong>~$16</strong></td><td class="td-num">83%</td></tr>
+        </tbody>
+      </table>
+      <p class="text-sm mt-8">Long-tenured customer ARPAC: <strong style="color:var(--green)">$27.3</strong> — monetisation potential ahead</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3: EARNINGS QUALITY -->
+  <div class="section-header">Earnings Quality &amp; Q1 2026 Alert</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">FCF vs Net Income (Quality Check)</div>
+      <table>
+        <thead><tr><th>Year</th><th class="td-num">FCF</th><th class="td-num">Net Income</th><th class="td-num">FCF/NI</th></tr></thead>
+        <tbody>
+          <tr><td>FY2023</td><td class="td-num">$1.25B</td><td class="td-num">$1.03B</td><td class="td-num td-green">1.21x ✅</td></tr>
+          <tr><td>FY2024</td><td class="td-num">$2.39B</td><td class="td-num">$1.97B</td><td class="td-num td-green">1.21x ✅</td></tr>
+          <tr><td>FY2025E</td><td class="td-num">~$3.4B</td><td class="td-num">$2.9B</td><td class="td-num td-green">~1.17x ✅</td></tr>
+        </tbody>
+      </table>
+      <p class="text-sm mt-8">FCF consistently exceeds net income — a strong earnings quality signal. Suggests no aggressive accrual accounting. The efficiency ratio of <strong style="color:var(--accent)">20%</strong> is world-class and reflects genuine structural cost advantage.</p>
+    </div>
+    <div class="card" style="border-color:#ef444444;">
+      <div class="card-title" style="color:var(--red);">⚠️ Q1 2026 Red Flag</div>
+      <div style="background:#1a0808; border-radius:8px; padding:14px; margin-bottom:12px;">
+        <div style="color:var(--red); font-size:20px; font-weight:700; font-family:'Courier New',monospace;">EPS: $0.18</div>
+        <div style="color:var(--text3); font-size:11px;">Missed consensus $0.20 by 10%</div>
+      </div>
+      <p class="text-sm">Primary miss driver: <strong style="color:var(--red)">credit provisions jumped +33% QoQ</strong>. Management cited Q1 seasonality + deliberate expansion into higher-risk borrower segments. Revenue beat strongly ($5.0B vs $4.61B est.), but provision surge spooked the market. Shares fell -3.5% after-hours.</p>
+      <p class="text-sm mt-8"><strong style="color:var(--yellow)">Key question for Q2 2026:</strong> Do provisions normalise (seasonality) or continue rising (credit cycle)? This single data point is the pivotal swing factor for the investment thesis.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: DCF VALUATION -->
+  <div class="section-header">DCF Valuation — 3 Scenarios</div>
+  <div class="card" style="margin-bottom:16px;">
+    <p class="text-sm">WACC: 12% (EM premium) &bull; Terminal Growth: 4% (Bull/Base) / 3% (Bear) &bull; Base FCF: FY2025E ~$3.4B &bull; Shares: ~4.87B</p>
+  </div>
+  <div class="dcf-grid">
+    <div class="dcf-card dcf-bear">
+      <div class="dcf-label">🐻 Bear Case</div>
+      <div class="dcf-price">$11.17</div>
+      <div class="dcf-change">-14% from current</div>
+      <div class="dcf-assumptions">
+        FCF growth:<br>
+        +15% → +12% → +12% → +8% → +8%<br>
+        Terminal growth: 3%<br><br>
+        Scenario: BRL depreciation, credit deterioration, Brazil macro slowdown<br><br>
+        Equity Value: $54.4B
+      </div>
+    </div>
+    <div class="dcf-card dcf-base">
+      <div class="dcf-label">📊 Base Case</div>
+      <div class="dcf-price">$16.65</div>
+      <div class="dcf-change">+29% from current</div>
+      <div class="dcf-assumptions">
+        FCF growth:<br>
+        +25% → +20% → +20% → +15% → +15%<br>
+        Terminal growth: 4%<br><br>
+        Scenario: Steady execution, stable credit, BRL roughly flat<br><br>
+        Equity Value: $81.1B
+      </div>
+    </div>
+    <div class="dcf-card dcf-bull">
+      <div class="dcf-label">🐂 Bull Case</div>
+      <div class="dcf-price">$19.36</div>
+      <div class="dcf-change">+50% from current</div>
+      <div class="dcf-assumptions">
+        FCF growth:<br>
+        +35% → +25% → +25% → +15% → +15%<br>
+        Terminal growth: 4%<br><br>
+        Scenario: Mexico inflects, ARPAC re-rates, AI drives margin expansion<br><br>
+        Equity Value: $94.3B
+      </div>
+    </div>
+  </div>
+
+  <!-- PEER MULTIPLES -->
+  <div class="card mt-16">
+    <div class="card-title">Peer Multiples</div>
+    <table>
+      <thead><tr><th>Metric</th><th class="td-num">NU (TTM)</th><th class="td-num">NU (Fwd FY2026E)</th><th class="td-num">High-Growth Fintech Peer Range</th><th>Assessment</th></tr></thead>
+      <tbody>
+        <tr><td>P/E</td><td class="td-num">22x</td><td class="td-num">~16x</td><td class="td-num">25–35x</td><td><span class="badge badge-buy">Undervalued</span></td></tr>
+        <tr><td>P/FCF</td><td class="td-num">20.9x</td><td class="td-num">~15x</td><td class="td-num">20–30x</td><td><span class="badge badge-buy">Attractive</span></td></tr>
+        <tr><td>PEG Ratio</td><td class="td-num">~0.4x</td><td class="td-num">—</td><td class="td-num">1.0x = fair value</td><td><span class="badge badge-buy">Deep discount</span></td></tr>
+        <tr><td>P/Book</td><td class="td-num">~7x</td><td class="td-num">—</td><td class="td-num">3–8x</td><td><span class="badge badge-watch">Elevated (justified by 33% ROE)</span></td></tr>
+        <tr><td>ROE</td><td class="td-num">33%</td><td class="td-num">—</td><td class="td-num">15–25%</td><td><span class="badge badge-buy">Best-in-class</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 5: CREDIT & BALANCE SHEET -->
+  <div class="section-header">Credit Quality &amp; Balance Sheet</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">NPL Trend (Non-Performing Loans)</div>
+      <table>
+        <thead><tr><th>Quarter</th><th class="td-num">15–90 Day NPL</th><th class="td-num">90+ Day NPL</th></tr></thead>
+        <tbody>
+          <tr><td>Q4 2024</td><td class="td-num td-green">4.1%</td><td class="td-num">6.7%</td></tr>
+          <tr><td>Q1 2025</td><td class="td-num td-red">4.7% ↑</td><td class="td-num td-red">6.9%</td></tr>
+          <tr><td>Q3 2025</td><td class="td-num td-yellow">4.2% ↓</td><td class="td-num td-yellow">6.7%</td></tr>
+          <tr><td>Q4 2025</td><td class="td-num td-green">4.1% ↓</td><td class="td-num td-green">6.6% ↓</td></tr>
+          <tr style="background:#1a0808;"><td><strong>Q1 2026</strong></td><td class="td-num td-red"><strong>Prov +33% QoQ ⚠️</strong></td><td class="td-num td-red">TBD</td></tr>
+        </tbody>
+      </table>
+      <p class="text-sm mt-8">NPL context: Brazil consumer credit naturally runs at higher NPLs than US/EU — compensated by much higher interest rates. H2 2025 showed improving trend; Q1 2026 provision surge reintroduces uncertainty.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Balance Sheet Snapshot (Q4 2025)</div>
+      <div class="bar-row">
+        <div class="bar-label">Total Capital</div>
+        <div class="bar-track"><div class="bar-fill" style="width:89%;background:var(--accent);"></div></div>
+        <div class="bar-val">$8.9B</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Excess Capital</div>
+        <div class="bar-track"><div class="bar-fill" style="width:22%;background:var(--green);"></div></div>
+        <div class="bar-val">$2.2B</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">HoldCo Cash</div>
+        <div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--green);"></div></div>
+        <div class="bar-val">$3.0B</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Credit Portfolio</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--orange);"></div></div>
+        <div class="bar-val">$32.7B</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Total Deposits</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--accent2);"></div></div>
+        <div class="bar-val">$41.9B</div>
+      </div>
+      <div class="divider"></div>
+      <table style="font-size:12px;">
+        <tr><td style="color:var(--text3);">D/E Ratio</td><td class="td-num td-green">0.29 ✅</td></tr>
+        <tr><td style="color:var(--text3);">Risk-Adjusted NIM</td><td class="td-num">10.5%</td></tr>
+        <tr><td style="color:var(--text3);">ROE</td><td class="td-num td-green">33%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 6: RISKS -->
+  <div class="section-header">Top 5 Investment Risks</div>
+
+  <div class="risk-item risk-high">
+    <div class="risk-title">
+      🔴 FX &amp; EM Currency Risk
+      <span class="risk-badge badge-high">HIGH — Ongoing</span>
+    </div>
+    <div class="risk-desc">~85% of revenue earned in Brazilian reals (BRL), reported in USD. Q4 2024: BRL depreciation caused Nu to miss USD revenue estimates despite strong local-currency growth. Currency-neutral FY2024 growth was materially higher than reported. A sustained 20% BRL depreciation reduces USD-reported revenue by ~17% with partial natural hedge (costs also BRL-denominated) but USD profits compress. Brazil's fiscal deficit concerns continue to pressure BRL structurally. <strong>This is the single largest systematic risk for US investors in NU.</strong></div>
+  </div>
+
+  <div class="risk-item risk-med-high">
+    <div class="risk-title">
+      🟠 Credit Quality Deterioration
+      <span class="risk-badge badge-med-high">MEDIUM-HIGH — Active Monitor</span>
+    </div>
+    <div class="risk-desc">Q1 2026 provisions jumped 33% QoQ — above seasonal norms. Nu is deliberately expanding into higher-risk borrower segments (thin credit files, lower-income Brazilians). If Brazil unemployment rises or wages stagnate, NPL ratios could move materially higher, hitting revenues and requiring higher provisions simultaneously — a double negative on earnings. The Q2 2026 provision data will be critical.</div>
+  </div>
+
+  <div class="risk-item risk-med-high">
+    <div class="risk-title">
+      🟠 Brazil Macro / Political Risk
+      <span class="risk-badge badge-med-high">MEDIUM-HIGH</span>
+    </div>
+    <div class="risk-desc">Brazil's Selic rate at ~13.75% creates funding cost pressure. Debt-to-GDP trending toward 100% raises fiscal sustainability concerns. Government intervention risk includes credit card rate caps, mandatory rate ceilings, or altered bankruptcy laws. The 2024 credit card installment regulation was a direct example of regulatory interference in Nu's core business.</div>
+  </div>
+
+  <div class="risk-item risk-med">
+    <div class="risk-title">
+      🟡 Regulatory Risk — Banking Supervision
+      <span class="risk-badge badge-med">MEDIUM</span>
+    </div>
+    <div class="risk-desc">Brazil's BCB increasingly treats Nu as systemically important — higher capital requirements could reduce returns and growth. US bank charter application (capital-intensive, complex regulatory process). Interchange fee compression would directly hit credit card revenue.</div>
+  </div>
+
+  <div class="risk-item risk-med">
+    <div class="risk-title">
+      🟡 Founder Concentration &amp; Governance
+      <span class="risk-badge badge-med">MEDIUM</span>
+    </div>
+    <div class="risk-desc">David Vélez holds ~20% and has disproportionate voting control via multi-class shares — board cannot effectively challenge strategy. August 2025: Vélez sold 33M shares at ~$14 for "personal asset planning." While this is a small fraction of his total holding, a founder selling at near-current prices could signal his own assessment of fair value. No insider buying on the open market.</div>
+  </div>
+
+  <!-- SECTION 7: MANAGEMENT & INSIDERS -->
+  <div class="section-header">Management &amp; Insider Activity</div>
+  <div class="card">
+    <div class="card-title">David Vélez — CEO &amp; Founder</div>
+    <div class="grid-2" style="gap:16px;">
+      <div>
+        <p class="text-sm" style="line-height:1.8;">Colombian entrepreneur. Stanford MBA. Former Sequoia Capital partner. Founded Nubank in São Paulo, 2013, with $25M seed from Sequoia. Built from zero to 135M customers and $63B market cap in ~13 years. Consistent long-term focus; dismisses short-term earnings pressure. Strong communicator on earnings calls. The AI pivot (NuFormer) demonstrates willingness to invest ahead of revenue for moat-deepening.</p>
+        <div class="divider"></div>
+        <table style="font-size:12px;">
+          <tr><td style="color:var(--text3);">Ownership</td><td class="td-num td-green">~20%</td></tr>
+          <tr><td style="color:var(--text3);">2025 Sale</td><td class="td-num td-yellow">33M shares (~$462M)</td></tr>
+          <tr><td style="color:var(--text3);">Rationale</td><td class="td-num">Personal asset planning</td></tr>
+          <tr><td style="color:var(--text3);">Open-market buys</td><td class="td-num td-red">None</td></tr>
+          <tr><td style="color:var(--text3);">Signal</td><td class="td-num td-yellow">NEUTRAL</td></tr>
+        </table>
+      </div>
+      <div style="background:var(--bg3); border-radius:8px; padding:16px;">
+        <div style="font-size:11px; color:var(--text3); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Management Quality Score</div>
+        <div class="bar-row"><div class="bar-label">Track record</div><div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--green);"></div></div><div class="bar-val">9.5/10</div></div>
+        <div class="bar-row"><div class="bar-label">Capital discipline</div><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--green);"></div></div><div class="bar-val">9/10</div></div>
+        <div class="bar-row"><div class="bar-label">Communication</div><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--green);"></div></div><div class="bar-val">8.5/10</div></div>
+        <div class="bar-row"><div class="bar-label">Insider alignment</div><div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--yellow);"></div></div><div class="bar-val">8/10</div></div>
+        <div class="bar-row"><div class="bar-label">Governance</div><div class="bar-track"><div class="bar-fill" style="width:65%;background:var(--yellow);"></div></div><div class="bar-val">6.5/10</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: ANALYST CONSENSUS -->
+  <div class="section-header">Analyst Consensus (May 2026)</div>
+  <div class="card">
+    <div class="grid-2" style="gap:24px;">
+      <div>
+        <div style="display:flex; gap:16px; margin-bottom:16px;">
+          <div style="text-align:center; padding:16px; background:var(--bg3); border-radius:8px; flex:1;">
+            <div style="font-size:36px; font-weight:800; color:var(--green);">15</div>
+            <div style="font-size:11px; color:var(--text3);">BUY</div>
+          </div>
+          <div style="text-align:center; padding:16px; background:var(--bg3); border-radius:8px; flex:1;">
+            <div style="font-size:36px; font-weight:800; color:var(--yellow);">3</div>
+            <div style="font-size:11px; color:var(--text3);">HOLD</div>
+          </div>
+          <div style="text-align:center; padding:16px; background:var(--bg3); border-radius:8px; flex:1;">
+            <div style="font-size:36px; font-weight:800; color:var(--red);">0</div>
+            <div style="font-size:11px; color:var(--text3);">SELL</div>
+          </div>
+        </div>
+        <p class="text-sm">88% of analysts rate NU as Buy. Zero Sell ratings — unusually strong consensus for a $63B market cap stock. Highest target: $22 (Susquehanna, Jan 2026).</p>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>Target Range</th><th class="td-num">Value</th></tr></thead>
+          <tbody>
+            <tr><td>Low Target</td><td class="td-num">$16.00</td></tr>
+            <tr><td>Consensus Target</td><td class="td-num td-green">$18–19.87</td></tr>
+            <tr><td>High Target</td><td class="td-num">$22.00</td></tr>
+            <tr><td>Current Price</td><td class="td-num td-yellow">$12.93</td></tr>
+            <tr style="background:var(--bg3);"><td><strong>Implied Upside</strong></td><td class="td-num td-green"><strong>+39–54%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: BULL/BASE/BEAR NARRATIVES -->
+  <div class="section-header">Investment Scenarios</div>
+  <div class="grid-3">
+    <div class="card" style="border-color:#10b98133;">
+      <div class="card-title" style="color:var(--green);">🐂 Bull Case — $19–22</div>
+      <p class="text-sm" style="line-height:1.8;">Mexico becomes a second Brazil: 15M → 40M+ customers by 2028. ARPAC re-rates toward $25+ as product depth deepens. NuFormer AI meaningfully lowers NPLs and improves pricing. BRL stabilises. US bank charter opens third growth engine. NI reaches $5–6B by 2027. <strong>Re-rates to 25x forward P/E.</strong></p>
+    </div>
+    <div class="card" style="border-color:#00d4ff33;">
+      <div class="card-title" style="color:var(--accent);">📊 Base Case — $16–18</div>
+      <p class="text-sm" style="line-height:1.8;">Steady execution continues. Revenue +30–35% annually. Credit quality normalises after Q1 2026 blip. Brazil remains core. BRL roughly flat. FY2026 NI ~$3.8B at <strong>16–17x forward P/E = $60–65B market cap.</strong> Re-rates to $16–18 as growth rate sustains. This is fair value on current numbers.</p>
+    </div>
+    <div class="card" style="border-color:#ef444433;">
+      <div class="card-title" style="color:var(--red);">🐻 Bear Case — $8–11</div>
+      <p class="text-sm" style="line-height:1.8;">Q1 2026 provisions were not seasonal — the start of a credit cycle. BRL falls 15–20% vs. USD on Brazil fiscal concerns. Regulatory pressure caps interchange fees. NI stagnates at ~$2.5B. Market de-rates from 22x to 12–13x on dual EM + credit risks. <strong>30–40% downside from current.</strong></p>
+    </div>
+  </div>
+
+  <!-- SECTION 10: FINAL CHECKLIST & VERDICT -->
+  <div class="section-header">Final Checklist</div>
+  <div class="card">
+    <div class="checklist-item">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Revenue growth trajectory</div>
+        <div class="check-note">40–45% YoY consistently. CAGR 89% since IPO. Q1 2026 continues trend.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Earnings quality (FCF &gt; Net Income)</div>
+        <div class="check-note">FCF/NI = 1.21x (FY2024). Consistent. No evidence of accrual manipulation.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Management quality</div>
+        <div class="check-note">Founder-led (Vélez ~20%), exceptional execution, 20% efficiency ratio, AI innovation.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Balance sheet strength</div>
+        <div class="check-note">$8.9B capital, D/E 0.29, $3B HoldCo cash, $2.2B excess capital, ROE 33%.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Valuation reasonable</div>
+        <div class="check-note">22x TTM P/E → ~16x forward. PEG ~0.4x. Significantly below 40–50% earnings growth rate. Analyst targets $18–20.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">⚠️</div>
+      <div class="check-text">
+        <div class="check-criterion">Credit quality — WATCH</div>
+        <div class="check-note">Q1 2026 provisions +33% QoQ exceeded seasonal norms. NPL trend had been improving in H2 2025. Q2 2026 data critical. Not yet confirmed as a cycle or noise.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">⚠️</div>
+      <div class="check-text">
+        <div class="check-criterion">FX/EM risk — ongoing headwind</div>
+        <div class="check-note">BRL structural pressure vs USD. Currency-neutral growth is materially stronger. Risk is permanent and asymmetric for USD investors.</div>
+      </div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Competitive moat</div>
+        <div class="check-note">$0.80/month cost-to-serve vs $6+ for incumbents. 20% efficiency ratio globally best-in-class. NPS best-in-Brazil. Network data flywheel.</div>
+      </div>
+    </div>
+    <div class="checklist-item" style="border-bottom:none;">
+      <div class="check-icon">✅</div>
+      <div class="check-text">
+        <div class="check-criterion">Analyst consensus</div>
+        <div class="check-note">15 Buy / 3 Hold / 0 Sell. Targets $18–22. Zero sell-side analysts bearish.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL VERDICT -->
+  <div class="verdict-box">
+    <div class="verdict-title">⚠️ WATCH — Lean BUY</div>
+    <div class="verdict-subtitle">
+      Nu Holdings is arguably the best-executed large-scale digital bank outside of China. At 22x trailing P/E and ~16x forward P/E for 40–50% earnings growth, the stock is genuinely undervalued relative to growth. Analyst consensus is overwhelmingly bullish at $18–20 targets. The business model is structurally advantaged, founder-led, and has delivered consistently for 5+ years since IPO.
+      <br><br>
+      The <strong style="color:var(--yellow)">single reason for WATCH over outright BUY</strong> is the Q1 2026 EPS miss driven by a 33% QoQ surge in credit provisions — above seasonal norms. Until Q2 2026 confirms this was seasonal and not a cycle turn, full conviction cannot be applied.
+      <br><br>
+      <strong style="color:var(--green);">Recommended action:</strong> Establish a half-position now at ~$13 (within 14% of bear case downside, vs. 29–50% base/bull upside). Add to full position if Q2 2026 provisions normalise. Reduce if provisions remain elevated.
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:16px;">
+      <div style="text-align:center; padding:12px; background:#0a1400; border-radius:8px; border:1px solid #10b98133;">
+        <div style="font-size:11px; color:var(--text3);">Bear / Support</div>
+        <div style="font-size:22px; font-weight:700; color:var(--red); font-family:'Courier New',monospace;">$11.17</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:#0a1420; border-radius:8px; border:1px solid var(--accent); box-shadow:0 0 20px #00d4ff11;">
+        <div style="font-size:11px; color:var(--text3);">Base Fair Value</div>
+        <div style="font-size:22px; font-weight:700; color:var(--accent); font-family:'Courier New',monospace;">$16.65</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:#0a1a0a; border-radius:8px; border:1px solid #10b98133;">
+        <div style="font-size:11px; color:var(--text3);">Bull Target</div>
+        <div style="font-size:22px; font-weight:700; color:var(--green); font-family:'Courier New',monospace;">$19.36</div>
+      </div>
+    </div>
+    <div class="verdict-note">
+      ⚡ Single biggest risk: BRL depreciation combined with credit quality deterioration — both trigger simultaneously in Brazil recessions and compound each other in USD-reported earnings. Monitor BRL/USD and Q2 2026 provision trends before committing full capital.
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>NU Holdings Deep Dive &bull; Report Date: 2026-05-17 &bull; Data Sources: Nu Holdings IR, SEC EDGAR (Form 6-K, 20-F), Seeking Alpha, Investing.com, StockTitan, MacroTrends, GuruFocus</p>
+  <p style="margin-top:4px;">This report is for informational purposes only and does not constitute investment advice. All figures as of May 2026. Past performance does not guarantee future results.</p>
+</div>
+
+</body>
+</html>
