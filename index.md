@@ -1,23 +1,11 @@
 # Daily Stock Picks
 
-**AI-powered equity research - NYSE & NASDAQ - 8am CDT daily**
-
-Two-layer screen: 40-stock watchlist + open discovery radar.
-
----
-
-## How to use this
-- **Top 10 Picks** — score 3-4/4
-- **Emerging Picks** — score 2-3/4, upside >20%
-- **Off-Watchlist Radar** — analyst upgrades, insider buying, earnings beats outside the watchlist
-- **Full Watchlist Scorecard** — all 40 ranked daily
-
----
-
 ## Latest Picks
 
-| Date | Link |
-|------|------|
+| Date | Report |
+|------|--------|
+| test | [View picks](picks/test.md) |
+| 2026-06-10 | [View picks](picks/2026-06-10.md) |
 | 2026-06-09 | [View picks](picks/2026-06-09.md) |
 | 2026-06-08 | [View picks](picks/2026-06-08.md) |
 | 2026-06-07 | [View picks](picks/2026-06-07.md) |
@@ -48,9 +36,6 @@ Two-layer screen: 40-stock watchlist + open discovery radar.
 | 2026-05-13 | [View picks](picks/2026-05-13.md) |
 | 2026-05-12 | [View picks](picks/2026-05-12.md) |
 | 2026-05-11 | [View picks](picks/2026-05-11.md) |
-
----
-
 
 ## Deep Dives
 
