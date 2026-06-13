@@ -18,6 +18,7 @@ Two-layer screen: 40-stock watchlist + open discovery radar.
 
 | Date | Link |
 |------|------|
+| 2026-06-13 | [View picks](picks/2026-06-13.md) |
 | 2026-06-12 | [View picks](picks/2026-06-12.md) |
 | 2026-06-11 | [View picks](picks/2026-06-11.md) |
 | 2026-06-10 | [View picks](picks/2026-06-10.md) |
